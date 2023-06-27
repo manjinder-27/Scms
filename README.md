@@ -1,4 +1,3 @@
-
 # Scms
  Scms is a School Management System written in python using django framework.
 
@@ -17,6 +16,11 @@ and then view the output in browser at `http://127.0.0.1:8000`
 ```
 python manage.py createsuperuser
 ```
+- If you find error `unable to get timezone with key UTC` then run this command
+```
+pip install tzdata
+```
+and run the server again.
 
 
 
