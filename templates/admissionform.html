@@ -6,19 +6,31 @@
     <form style="margin:50px; margin-top:25px;" class="row g-3 needs-validation" method="POST" >
     {% csrf_token %}
   <div class="col-md-4">
-    <label for="validationCustom01" class="form-label" >First name</label>
-    <input type="text" class="form-control" id="validationCustom01" name="fname" required>
+    <label for="validationCustom01" class="form-label" >Full Name</label>
+    <input type="text" class="form-control" id="validationCustom01" name="name" required>
   </div>
   <div class="col-md-4">
-    <label for="validationCustom02" class="form-label">Last name</label>
-    <input type="text" class="form-control" id="validationCustom02" name="lname" required>
+    <label for="validationCustom02" class="form-label">Father's Name</label>
+    <input type="text" class="form-control" id="validationCustom02" name="fname" required>
   </div>
   <div class="col-md-3">
-    <label for="validationCustom05" class="form-label">Father Name</label>
-    <input type="text" class="form-control" id="validationCustom05" name="father">
+    <label for="validationCustom05" class="form-label">Aadhar Number</label>
+    <input type="text" class="form-control" id="validationCustom05" name="aadhar">
   </div>
   
-  <select class="form-select" aria-label="Default select example" name='cls' >
+  <select class="form-select" aria-label="Default select example" name='type' >
+  <option selected value="Student" >Select Application Type</option>
+  <option value="Student">Student</option>
+  <option value="Teacher">Teacher</option>
+  <option value="Accountant">Accountant</option>
+  <option value="Receptionist">Receptionist</option>
+  <option value="Helper">Helper</option>
+  <option value="Driver">Driver</option>
+</select>
+  
+  
+   <label for="selectfield" class="form-label">Select Class only if applying as a Student</label>
+  <select class="form-select" aria-label="Default select example" id="selectfield" name='cls' >
   <option selected value="Nursery" >Select Class</option>
   <option value="Nursery" >Nursery</option>
   <option value="LKG">LKG</option>

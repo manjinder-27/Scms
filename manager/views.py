@@ -1,7 +1,8 @@
 from django.shortcuts import render,redirect
 from django.contrib import messages
 from django.contrib.auth import login,logout,authenticate
-from manager.models import Student,Application
+from manager.models import Student,Application,Employee
+import os
 
 baseData = {
 	'schoolName':'My School'
@@ -13,21 +14,21 @@ def home(request):
 
 def newAdmission(request):
 	if request.method == "POST":
-		if len(Application.objects.all()) > 0:
-			id = str(int(Application.objects.last().appId) + 1)
-		else:
-			id = "1"
-		firstName = request.POST.get('fname')
-		lastName = request.POST.get('lname')
+		applicationType = request.POST.get('type')
+		name = request.POST.get('name')
+		father = request.POST.get('fname')
 		cls = request.POST.get('cls')
 		phone = request.POST.get('phone')
-		father = request.POST.get('father')
-		application = Application(appId=id,firstName = firstName,lastName=lastName,studentClass = cls,phoneNumber=phone,fatherName=father)
+		aadhar = request.POST.get('aadhar')
+		if applicationType == "Student":
+			appliedAs = "Student"
+			appliedFor = cls
+		else:
+			appliedAs = "Employee"
+			appliedFor = applicationType
+		application = Application(name = name,father=father,appliedAs=appliedAs,appliedFor=appliedFor,phone=phone,aadhar=aadhar)
 		application.save()
-		data = {}
-		data['appid'] = id
-		data['schoolName'] = baseData['schoolName']
-		return render(request,'admissionsuccess.html',context=data)
+		return render(request,'admissionsuccess.html',context=baseData)
 	return render(request,'admissionform.html',context=baseData)
 
 def staffLogin(request):
@@ -47,18 +48,7 @@ def showAbout(request):
 
 def dashboard(request):
 	if request.user.is_authenticated:
-		data1 = []
-		for i in Student.objects.all():
-			data1.append({'admNum':i.admNum,'firstName':i.firstName,'lastName':i.lastName,'fatherName':i.fatherName,'phoneNumber':i.phoneNumber,'studentClass':i.studentClass})
-		data2 = []
-		for i in Application.objects.all():
-			data2.append({'appId':i.appId,'firstName':i.firstName,'lastName':i.lastName,'fatherName':i.fatherName,'phoneNumber':i.phoneNumber,'studentClass':i.studentClass})
-		data = {
-			'studentsData':data1,
-			'applicationsData':data2
-		}
-		data['schoolName'] = baseData['schoolName']
-		return render(request,'dashboard.html',context=data)
+		return render(request,'dashboard.html',context=baseData)
 	else:
 		return render(request,'autherror.html',context=baseData)
 
@@ -69,37 +59,77 @@ def logoutUser(request):
 	logout(request)
 	return redirect('/')
 
-def removeStudent(request,admNum):
+def removeStudent(request,adm):
 	if request.user.is_authenticated:
 		for s in Student.objects.all():
-			if s.admNum == admNum:
+			if s.adm == adm:
 				s.delete()
 				break
 		return redirect('/dashboard')
 	else:
 		return render(request,'autherror.html',context=baseData)
 
-def getObj(id):
+
+def removeEmployee(request,id):
+	if request.user.is_authenticated:
+		for e in Employee.objects.all():
+			if e.uid == id:
+				e.delete()
+				break
+		return redirect('/dashboard')
+	else:
+		return render(request,'autherror.html',context=baseData)
+
+
+def getObj(appid):
 	for i in Application.objects.all():
-		if i.appId == id:
+		if i.id == int(appid):
 			return i
+
 
 def approveApplication(request,appid):
 	if request.user.is_authenticated:
-		if len(Student.objects.all()) > 0:
-			num = int(Student.objects.last().admNum) + 1
-		else:
-			num = "9001"
 		obj = getObj(appid)
-		admnum = "0" + str(num)
-		firstName = obj.firstName
-		lastName = obj.lastName
-		cls = obj.studentClass
-		phone = obj.phoneNumber
-		father = obj.fatherName
-		student = Student(admNum=admnum,firstName = firstName,lastName=lastName,studentClass = cls,phoneNumber=phone,fatherName=father)
-		student.save()
+		if obj.appliedAs == "Student":
+			student = Student(adm=obj.id,name=obj.name,father=obj.father,phone=obj.father,aadhar=obj.aadhar,cls=obj.appliedFor)
+			student.save()
+		else:
+			employee = Employee(uid=obj.id,name=obj.name,father=obj.father,phone=obj.father,aadhar=obj.aadhar,job=obj.appliedFor)
+			employee.save()
 		obj.delete()
 		return redirect('/dashboard')
 	else:
 		return render(request,'autherror.html',context=baseData)
+
+
+def showStudentsList(request):
+	if request.user.is_authenticated:
+		data = []
+		for i in Student.objects.all():
+			data.append({'adm':i.adm,'name':i.name,'father':i.father,'phone':i.phone,'aadhar':i.aadhar,'cls':i.cls})
+		baseData['studentsData'] = data
+		return render(request,'studentlist.html',baseData)
+	else:
+		return render(request,'autherror.html',context=baseData) 
+
+
+def showApplicationsList(request):
+	if request.user.is_authenticated:
+		data = []
+		for i in Application.objects.all():
+			data.append({'num':i.id,'name':i.name,'father':i.father,'phone':i.phone,'aadhar':i.aadhar,'appliedAs':i.appliedAs,'appliedFor':i.appliedFor})
+		baseData['applicationsData'] = data
+		return render(request,'applicationlist.html',baseData)
+	else:
+		return render(request,'autherror.html',context=baseData) 
+
+
+def showStaffList(request):
+	if request.user.is_authenticated:
+		data = []
+		for i in Employee.objects.all():
+			data.append({'id':i.uid,'name':i.name,'father':i.father,'phone':i.phone,'aadhar':i.aadhar,'work':i.job})
+		baseData['staffData'] = data
+		return render(request,'stafflist.html',baseData)
+	else:
+		return render(request,'autherror.html',context=baseData) 

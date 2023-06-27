@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<h1 style="text-align:center; margin-top:10px;" >Students List</h1>
+	<table class="table" style="margin:20px auto; width:90%;" >
+	  <thead>
+	    <tr>
+	      <th scope="col">Employee ID</th>
+	      <th scope="col">Name</th>
+	      <th scope="col">Father's Name</th>
+	      <th scope="col">Working As</th>
+	      <th scope="col">Phone Number</th>
+	      <th scope="col">Aadhar ID</th>
+	    </tr>
+	  </thead>
+	  <tbody>
+	  {% for staff in staffData %}
+	    <tr>
+	      <th scope="row">{{ staff.id }}</th>
+	      <td>{{ staff.name }}</td>
+	      <td>{{ staff.father }} </td>
+	      <td>{{ staff.work }}</td>
+	      <td>{{ staff.phone }}</td>
+	      <td>{{ staff.aadhar }}</td>
+	      <td><button class="btn btn-primary" type="submit" style="display:block; margin:1em auto;" ><a href="/remove/employee/{{ staff.id }}" style="text-decoration:none; color:white; " >Remove</a></button></td>
+	    </tr>
+	    {% endfor %}
+	  </tbody>
+	</table>
+	
+	<button class="btn btn-primary" type="submit" style="display:block; margin:2em auto;" ><a href="/dashboard" style="text-decoration:none; color:white; " >Go Back</a></button>
+
+{% endblock %}

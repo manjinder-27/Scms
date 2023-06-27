@@ -9,6 +9,10 @@ urlpatterns = [
     path('dashboard/',views.dashboard),
     path('feestruct/',views.showfeestruct),
     path('logout/',views.logoutUser),
-    path('remove/<str:admNum>',views.removeStudent),
+    path('dashboard/students/',views.showStudentsList),
+    path('dashboard/applications/',views.showApplicationsList),
+    path('dashboard/staff/',views.showStaffList),
+    path('remove/student/<str:adm>',views.removeStudent),
+    path('remove/employee/<str:id>',views.removeEmployee),
     path('approve/<str:appid>',views.approveApplication),
 ]

@@ -2,60 +2,36 @@
 
 {% block content %}
 
-<h1 style="text-align:center; margin-top:10px;" >Students List</h1>
-	<table class="table" style="margin:20px auto; width:90%;" >
-	  <thead>
-	    <tr>
-	      <th scope="col">Admission No.</th>
-	      <th scope="col">First Name</th>
-	      <th scope="col">Last Name</th>
-	      <th scope="col">Class</th>
-	      <th scope="col">Father Name</th>
-	      <th scope="col">Phone Number</th>
-	    </tr>
-	  </thead>
-	  <tbody>
-	  {% for student in studentsData %}
-	    <tr>
-	      <th scope="row">{{ student.admNum }}</th>
-	      <td>{{ student.firstName }}</td>
-	      <td>{{ student.lastName }} </td>
-	      <td>{{ student.studentClass }}</td>
-	      <td>{{ student.fatherName }}</td>
-	      <td>{{ student.phoneNumber }}</td>
-	      <td><button class="btn btn-primary" type="submit" style="display:block; margin:2.5em auto;" ><a href="/remove/{{ student.admNum }}" style="text-decoration:none; color:white; " >Remove</a></button></td>
-	    </tr>
-	    {% endfor %}
-	  </tbody>
-	</table>
-	
-	<h1 style="text-align:center; margin-top:10px;" >Admission Applications</h1>
-	<table class="table" style="margin:20px auto; width:90%;" >
-	  <thead>
-	    <tr>
-	      <th scope="col">Application ID</th>
-	      <th scope="col">First Name</th>
-	      <th scope="col">Last Name</th>
-	      <th scope="col">Class</th>
-	      <th scope="col">Father Name</th>
-	      <th scope="col">Phone Number</th>
-	    </tr>
-	  </thead>
-	  <tbody>
-	  {% for application in applicationsData %}
-	    <tr>
-	      <th scope="row">{{ application.appId }}</th>
-	      <td>{{ application.firstName }}</td>
-	      <td>{{ application.lastName }} </td>
-	      <td>{{ application.studentClass }}</td>
-	      <td>{{ application.fatherName }}</td>
-	      <td>{{ application.phoneNumber }}</td>
-	      <td><button class="btn btn-primary" type="submit" style="display:block; margin:2.5em auto;" ><a href="/approve/{{ application.appId }}" style="text-decoration:none; color:white; " >Approve</a></button></td>
-	    </tr>
-	    {% endfor %}
-	  </tbody>
-	</table>
-	
-    <button class="btn btn-primary" type="submit" style="display:block; margin:2.5em auto;" ><a href="/logout" style="text-decoration:none; color:white;" >Logout</a></button>
+<div class="card text-center mb-3" style="width: 70%; margin:2em auto;">
+  <div class="card-body">
+    <h5 class="card-title">Students</h5>
+    <p class="card-text">Check List of Students.</p>
+    <a href="/dashboard/students/" class="btn btn-primary">Show</a>
+  </div>
+</div>
+
+<div class="card text-center mb-3" style="width: 70%; margin:auto;">
+  <div class="card-body">
+    <h5 class="card-title">Staff</h5>
+    <p class="card-text">Check List of Staff Members.</p>
+    <a href="/dashboard/staff" class="btn btn-primary">Show</a>
+  </div>
+</div>
+
+<div class="card text-center mb-3" style="width: 70%; margin:auto;">
+  <div class="card-body">
+    <h5 class="card-title">Applications</h5>
+    <p class="card-text">List of all Applications Submitted through online portal.</p>
+    <a href="/dashboard/applications" class="btn btn-primary">Show</a>
+  </div>
+</div>
+
+<div class="card text-center mb-3" style="width: 70%; margin:auto;">
+  <div class="card-body">
+    <h5 class="card-title">Logout</h5>
+    <p class="card-text">Don't forget to logout before you go.</p>
+    <a href="/logout/" class="btn btn-primary">Logout</a>
+  </div>
+</div>
 
 {% endblock %}

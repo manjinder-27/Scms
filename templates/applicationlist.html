@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<h1 style="text-align:center; margin-top:10px;" >Applications List</h1>
+	<table class="table" style="margin:20px auto; width:90%;" >
+	  <thead>
+	    <tr>
+	      <th scope="col">Application No.</th>
+	      <th scope="col">Name</th>
+	      <th scope="col">Father's Name</th>
+	      <th scope="col">Applied As</th>
+	      <th scope="col">Applied For</th>
+	      <th scope="col">Phone Number</th>
+	      <th scope="col">Aadhar ID</th>
+	    </tr>
+	  </thead>
+	  <tbody>
+	  {% for application in applicationsData %}
+	    <tr>
+	      <th scope="row">{{ application.num }}</th>
+	      <td>{{ application.name }}</td>
+	      <td>{{ application.father }} </td>
+	      <td>{{ application.appliedAs }}</td>
+	      <td>{{ application.appliedFor }}</td>
+	      <td>{{ application.phone }}</td>
+	      <td>{{ application.aadhar }}</td>
+	      <td><button class="btn btn-primary" type="submit" style="display:block; margin:1em auto;" ><a href="/approve/{{ application.num }}" style="text-decoration:none; color:white; " >Approve</a></button></td>
+	    </tr>
+	    {% endfor %}
+	  </tbody>
+	</table>
+		
+	<button class="btn btn-primary" type="submit" style="display:block; margin:2em auto;" ><a href="/dashboard" style="text-decoration:none; color:white; " >Go Back</a></button>
+
+{% endblock %}
