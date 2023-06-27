@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+
+{% block content %}
+	
+	{% if messages %}
+	{% for message in messages %}
+	<div class="alert alert-warning alert-dismissible fade show" role="alert">
+	{{ message }}
+	  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+	</div>
+	{% endfor %}
+	{% endif %}
+	
+  <h1 style="text-align:center; margin-top:50px; font-weight:700;" >Staff Login</h1>
+  <form style="margin:50px; margin-top:30px;" method="POST" >
+  {% csrf_token %}
+  <div class="mb-3">
+    <label for="exampleInputuser1" class="form-label">Username</label>
+    <input type="text" class="form-control" id="exampleInputuser1" name="username" >
+  </div>
+  <div class="mb-3">
+    <label for="exampleInputPassword1" class="form-label">Password</label>
+    <input type="password" class="form-control" id="exampleInputPassword1" name="password" >
+  </div>
+  <button style="display:block; margin:auto; font-size:1.2rem;" type="submit" class="btn btn-primary">Login</button>
+</form>
+
+{% endblock %}

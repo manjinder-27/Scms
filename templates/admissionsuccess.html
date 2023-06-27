@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+	<div class="card" style="width: 70%; margin: 2em auto;">
+	  <img src="/static/images/tick.jpg" class="card-img-top" alt="...">
+	  <div class="card-body">
+	    <h4 class="card-title">Registered Successfully ! </h4>
+	    <p class="card-text">Your Admission form has been Submitted Successfully.Your application ID is <strong>{{ appid }}</strong> .You will be notified on your registered mobile number when your admission will be approved by our authorities. </p>
+	    <a href="/" class="btn btn-primary">Back to Home</a>
+	  </div>
+	</div>
+
+{% endblock %}
